@@ -1,4 +1,7 @@
 Apptest::Application.routes.draw do
+  get "contact" => "contact#index", as: :contact
+  post "contact/create", as: :post_contact
+  get "index/create"
   get "home/index"
   devise_for :users
   get "sessions/new"
@@ -6,7 +9,7 @@ Apptest::Application.routes.draw do
   get "sessions/failure"
 
   get '/auth/:provider/callback', :to => 'sessions#create'
-
+  resources :contact
   root to: "home#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

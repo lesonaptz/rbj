@@ -41,13 +41,7 @@ RSpec.configure do |config|
   config.order = "random"
 end
 
+
 RACK_ENV = ENV['ENVIRONMENT'] ||= 'test'
 OmniAuth.config.test_mode = true
-omniauth_hash =
-    {:provider => "facebook",
-     :uid      => "1234",
-     :info   => {:name       => "Le Anh Son",
-                 :email      => "lesonapt@gmail.com"},
-     :credentials => {:token => "testtoken234tsdf"}}
 
-OmniAuth.config.add_mock(:facebook, omniauth_hash)
