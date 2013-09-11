@@ -40,10 +40,15 @@ gem 'omniauth-twitter'
 gem 'omniauth-linkedin'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-rails', '~> 2.0'    
+  gem 'factory_girl_rails'
+
 end
 
 gem 'angularjs-rails'
+
+gem 'haml-rails'
+# gem "rails3-generators", :group => :development
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

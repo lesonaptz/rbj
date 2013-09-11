@@ -2,18 +2,20 @@ require 'spec_helper'
 
 describe ContactController do
 
-  describe "GET 'index'" do
-    it "returns http success" do
-      get 'index'
-      response.should be_success
-    end
-  end
+  describe "Authenticated examples" do
 
-  describe "GET 'create'" do
-    it "returns http success" do
-      get 'create'
-      response.should be_success
+    before(:each) do
+      user = FactoryGirl.create(:user)
+      controller.stub!(:current_user).and_return(user)
     end
-  end
+    
 
+    it "should add new contact" do 
+      contact = FactoryGirl.create(:contact)
+      # post 'create', :post => contact
+      expect { Contact.create }.to change{Contact.count}.from(0).to(1)
+    end
+
+  end
+ 
 end
