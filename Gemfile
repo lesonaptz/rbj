@@ -39,6 +39,11 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'omniauth-linkedin'
 
+# get contact face
+gem "koala"
+gem 'fb_graph'
+gem "linkedin"
+gem "twitter"
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'    
   gem 'factory_girl_rails'
@@ -48,6 +53,9 @@ end
 gem 'angularjs-rails'
 
 gem 'haml-rails'
+
+gem 'delayed_job_active_record'
+
 # gem "rails3-generators", :group => :development
 
 # Use ActiveModel has_secure_password

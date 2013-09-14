@@ -17,6 +17,11 @@ class ContactController < ApplicationController
       render 'index'
     end
   end
+
+  def edit
+    @post = Contact.find(params[:id])
+    render :text => @post.inspect
+  end
 	
   def show
   end
