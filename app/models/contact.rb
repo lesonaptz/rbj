@@ -8,17 +8,31 @@ class Contact < ActiveRecord::Base
 		if type == 'facebook'
 			graph = Koala::Facebook::API.new(api_token)
 	    user = graph.get_object("me")
-	    contact_data = graph.fql_query("select name, uid from user where uid in (select uid2 from friend where uid1 = #{user["id"]} )")
+	    contact_data = graph.fql_query("select email, contact_email, name, uid from user where uid in (select uid2 from friend where uid1 = #{user["id"]} )")
 		elsif type == 'twitter'
-			contact_data = Twitter.friends		
+			# Twitter.update("I'm demo gemfile to post to wall")
+		  # contact_data = Twitter.user(258286822)	
+		  contact_data = Twitter.friends	
 		else
+			# client = LinkedIn::Client.new('API Key', 'Secret Key')
 			client = LinkedIn::Client.new('muh3vc5p2rlw', 'WNPnOxdQFqbIDnci')
-			client.request_token.authorize_url
+
+			#auto get token
+				# rtoken = client.request_token.token
+			#auto get secret	
+   		 # rsecret = client.request_token.secret
+
+			# client.authorize_from_access('OAuth User Token:', 'OAuth User Secret') 
 			client.authorize_from_access('c28dce3f-3e47-442c-8636-39aff85d7830', 'df307fa4-2942-450a-a799-1308e1a1bedc') 
+			
+			#  get profile success
+			# contact_data = client.profile
+			
+			# get connections error
 			contact_data = client.connections
 		end					
-		self.filter_contact(contact_data, type)
 		self.contact_add(self.filter_contact(contact_data, type))
+		contact_data
 	end
 
 	def self.filter_contact(contact_data, type = 'facebook')
@@ -38,7 +52,7 @@ class Contact < ActiveRecord::Base
 		result
 	end
 
-  def self.contact_add(contact_data)  	
+  def self.contact_add(contact_data)  	  	
 		Contact.create(contact_data)
 	end
 	
