@@ -32,7 +32,6 @@ class Contact < ActiveRecord::Base
 			contact_data = client.connections
 		end					
 		self.contact_add(self.filter_contact(contact_data, type))
-		contact_data
 	end
 
 	def self.filter_contact(contact_data, type = 'facebook')
