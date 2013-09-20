@@ -54,7 +54,7 @@ gem 'angularjs-rails'
 
 gem 'haml-rails'
 
-gem 'delayed_job_active_record'
+gem 'sidekiq'
 
 # gem "rails3-generators", :group => :development
 
