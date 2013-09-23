@@ -12,7 +12,7 @@ describe ContactController do
 
     it "should add new contact" do 
       contact = FactoryGirl.create(:contact)
-      # post 'create', :post => contact
+      post 'create'
       expect { Contact.create }.to change{Contact.count}.from(0).to(1)
     end
 

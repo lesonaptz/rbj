@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
 
   def create
     omniauth = request.env["omniauth.auth"]
+    # render :text => omniauth.to_yaml
     @user = Contact.check_visit_user(omniauth)      
     if @user.persisted?
       flash[:notice] = "Success login with"+" "+omniauth.provider

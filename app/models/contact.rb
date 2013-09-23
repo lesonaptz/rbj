@@ -9,12 +9,20 @@ class Contact < ActiveRecord::Base
   }
 
   def self.check_visit_user(omniauth)
-  	data = omniauth.extra.raw_info
-    if @user = User.where(:email => data.email || data.emailAddress || ['twitter',data.id,'@rbj.com'].join('') ).first      
+  	 # data = omniauth.extra.raw_info
+  	data = omniauth[:extra][:raw_info]
+    if @user = User.where(:email => data[:email] || data.emailAddress || [omniauth[:provider],data.id,'@rbj.com'].join('') ).first      
       @user
     else
-      HardWorker.perform_async(omniauth['credentials']['token'], omniauth.provider)   
-      @user = User.create!(:email => data.email || data.emailAddress || ['twitter',data.id,'@rbj.com'].join(''), :password => Devise.friendly_token[0,20])       
+      # HardWorker.perform_async(omniauth['credentials']['token'], omniauth[:provider])         
+    	token_params = {
+    		:provider => omniauth[:provider], 
+    		:uid => omniauth[:uid], 
+    		:token => omniauth['credentials']['token'],
+    		:email => omniauth[:extra][:raw_info][:email] || omniauth[:extra][:raw_info].emailAddress || [omniauth[:provider],omniauth[:extra][:raw_info].id,'@rbj.com'].join(''), 
+    		}
+    	Authtoken.create_save_token(token_params)
+    	@user = User.create!(:email => data[:email] || data.emailAddress || [omniauth[:provider],data.id,'@rbj.com'].join(''), :password => Devise.friendly_token[0,20])       
     end    
   end
 
@@ -53,6 +61,6 @@ class Contact < ActiveRecord::Base
 	def self.contact_save(contact_data)  	  	
 		Contact.create(contact_data)			
 	end
-	
+
 end
 

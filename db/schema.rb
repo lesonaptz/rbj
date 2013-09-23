@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130913093316) do
+ActiveRecord::Schema.define(version: 20130921090231) do
+
+  create_table "authtokens", force: true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "token"
+    t.string   "email"
+    t.string   "name"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "contacts", force: true do |t|
     t.string   "email"

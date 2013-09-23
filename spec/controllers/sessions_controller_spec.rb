@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe SessionsController, "OmniAuth" do
   include Devise::TestHelpers	
-  before do
+  before :each do
     request.env["devise.mapping"] = Devise.mappings[:user] 
   end
 
@@ -17,7 +17,7 @@ describe SessionsController, "OmniAuth" do
   it "login with linkedin" do
     request.env["omniauth.auth"] = stub_env_for_omniauth_linkedin    
     get 'create' 
-     assigns[:user].should be_true   
+    assigns[:user].should be_true   
   end
 
   it "login with facebook" do
@@ -31,9 +31,10 @@ describe SessionsController, "OmniAuth" do
     omniauth_hash = {
      :extra => {
       :provider => "facebook",      
-      :raw_info   => {:name   => "Le Anh Son", :email => "lesonapt@gmail.com", :id => "1234"},
-      :credentials => {:token => "testtoken234tsdf"}
-      }
+      :raw_info   => {:name   => "Le Anh Son", :email => "lesonapt@gmail.com", :id => "1234"}
+      },
+      :credentials => {:token => "testtoken234tsdf"},
+      :provider => 'facebook'
     }
     OmniAuth.config.add_mock(:facebook, omniauth_hash)
   end
@@ -42,9 +43,10 @@ describe SessionsController, "OmniAuth" do
     omniauth_hash = {
      :extra => {
       :provider => "twitter",      
-      :raw_info   => {:name   => "Le Anh Son", :id => "1731160094", },
-      :credentials => {:token => "testtoken234tsdf"}
-      }
+      :raw_info   => {:name   => "Le Anh Son", :id => "1731160094"}      
+      },
+      :credentials => {:token => "testtoken234tsdf"},
+      :provider => 'twitter'
     }
     OmniAuth.config.add_mock(:twitter, omniauth_hash)
   end
@@ -53,9 +55,10 @@ describe SessionsController, "OmniAuth" do
      omniauth_hash = {
      :extra => {
       :provider => "linkedin",      
-      :raw_info   => {:name   => "Le Anh Son",:id => "1234"},
-      :credentials => {:token => "testtoken234tsdf"}
-      }
+      :raw_info   => {:name   => "Le Anh Son",:id => "1234"}   
+      },
+      :credentials => {:token => "testtoken234tsdf"},
+      :provider => 'linkedin'
     }    
     OmniAuth.config.add_mock(:linkedin, omniauth_hash)
   end

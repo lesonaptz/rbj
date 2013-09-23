@@ -9,9 +9,10 @@ class ContactController < ApplicationController
     # render :partial => 'new'
   end
 
-  def create 
+  def create
     @postcontact = Contact.new(post_params)     
 	  if @postcontact.save
+      flash[:cntc] = "Success send contact"
   	  redirect_to root_path
   	else
       render 'index'
