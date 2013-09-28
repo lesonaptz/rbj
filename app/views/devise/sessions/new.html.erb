@@ -28,7 +28,11 @@
 					<% end %>
 					<%= link_to "Connect With Facebook", "/auth/facebook" %> </br>
 					<%= link_to "Connect With Twitter", "/auth/twitter" %></br>
-					<%= link_to "Connect With Linkedin", "/auth/linkedin" %>
+					<%= link_to "Connect With Linkedin", "/auth/linkedin" %></br>
+
+					<% link_to "Invite your Gmail contacts", GmailContacts::Google.authentication_url("http://las.me:3000/invites") %><br>
+
+					
 		  	</div>
 		  <div>
 	<div>

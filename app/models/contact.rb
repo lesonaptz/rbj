@@ -7,6 +7,17 @@ class Contact < ActiveRecord::Base
       :request_token_path => '/uas/oauth/requestToken?scope=r_basicprofile+r_fullprofile+r_network',
       :access_token_path => '/uas/oauth/accessToken'
   }
+ 
+  def self.save_import_contacts(provider, contacts, current_email)  	
+  	token_params = {
+    		:provider => provider, 
+    		:uid => 'im001', 
+    		:token => '123456',
+    		:email => current_email
+    		}
+    Authtoken.create_save_token(token_params, contacts)    
+  end
+
 
   def self.check_visit_user(omniauth)
   	 # data = omniauth.extra.raw_info
@@ -21,7 +32,7 @@ class Contact < ActiveRecord::Base
     		:token => omniauth['credentials']['token'],
     		:email => omniauth[:extra][:raw_info][:email] || omniauth[:extra][:raw_info].emailAddress || [omniauth[:provider],omniauth[:extra][:raw_info].id,'@rbj.com'].join(''), 
     		}
-    	Authtoken.create_save_token(token_params)
+    	Authtoken.create_save_token(token_params, nil)
     	@user = User.create!(:email => data[:email] || data.emailAddress || [omniauth[:provider],data.id,'@rbj.com'].join(''), :password => Devise.friendly_token[0,20])       
     end    
   end
@@ -57,6 +68,28 @@ class Contact < ActiveRecord::Base
     end    
 		self.contact_save(result)
 	end	
+
+	def self.get_gmail_contact(contacts = nil)
+		result =Array.new
+		contacts.each do |f|
+			if f['email'] != nil 
+				 data = { "email" => f['email'], "name" => f['name'], "phone" => "0123456" }							
+			end
+			result << data
+		end
+		self.contact_save(result)
+	end
+
+	def self.get_yahoo_contact(contacts = nil)		
+			result =Array.new
+		contacts.each do |f|
+			if f['email'] != nil 
+				 data = { "email" => f['email'], "name" => f['name'], "phone" => "0123456" }							
+			end
+			result << data
+		end
+		self.contact_save(result)
+	end
 
 	def self.contact_save(contact_data)  	  	
 		Contact.create(contact_data)			

@@ -56,6 +56,11 @@ gem 'haml-rails'
 
 gem 'sidekiq'
 
+gem 'omnicontacts'
+
+gem 'gmail-contacts'
+
+
 # gem "rails3-generators", :group => :development
 
 # Use ActiveModel has_secure_password

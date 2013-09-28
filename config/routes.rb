@@ -12,7 +12,14 @@ Apptest::Application.routes.draw do
   get "sessions/failure"
 
   get '/auth/:provider/callback', :to => 'sessions#create'
-  
+  get '/contacts/:importer/callback', :to => 'sessions#contacts_callback'
+
+  get 'import/:provider', :to => 'sessions#check_authtoken'
+
+  get "/invites" => "sessions#get_gmail_contact"
+  get "/yahoo_callback" => "sessions#get_yahoo_contact"
+
+  #match "/contacts/:importer/callback", to:  "sessions#contacts_callback", via: [:get]
   resources :contact
   root to: "home#index"
  
